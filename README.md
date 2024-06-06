@@ -1,3 +1,32 @@
+<!-- LOGOTIPO DO PROJETO -->
+<div style="display: flex; justify-content: center;">
+   <a href="https://github.com/edendenis/luks">
+     <img src="figures/gold_edf_technology_logo_transparent_background_and_gold_name.png" alt="Logo" width="160" height="160">
+   </a>
+</div>
+
+<h3 align="center">Como configurar/instalar/usar o `luks` no `Linux Ubuntu`</h3>
+
+<!-- <div style="display: flex; justify-content: center;">
+  <a href="https://zenodo.org/doi/10.5281/zenodo.10668919">
+    <img src="https://zenodo.org/badge/758237447.svg" alt="DOI">
+  </a>
+</div> -->
+
+<p align="center">
+ Neste documento estão contidos os principais comandos e configurações para configurar/instalar/usar o `luks` no `Linux Ubuntu`.
+ <br />
+ <a href="https://github.com/edendenis/luks"><strong>Explore os documentos »</strong></a>
+ <br />
+ <br />
+ <a href="https://github.com/edendenis/luks">Ver demonstração</a>
+ ·
+ <a href="https://github.com/edendenis/luks">Relatar bug</a>
+ ·
+ <a href="https://github.com/edendenis/luks">Solicitar recurso</a>
+</p>
+
+
 # Como configurar/instalar/usar o `luks` no `Linux Ubuntu`
 
 ## Resumo
@@ -9,30 +38,32 @@ Neste documento estão contidos os principais comandos e configurações para co
 _In this document are contained the main commands and settings to set up/install/use the `luks` on `Linux Ubuntu`._
 
 
-## Revisão(ões)/Versão(ões)
+### Construído com
 
-| Revisão número | Data da revisão | Descrição da revisão                                    | Autor da revisão                                |
-|:--------------:|:---------------:|:--------------------------------------------------------|:------------------------------------------------|
-| 0              | 16/04/2024      | <ul><li>Revisão inicial/criação do documento.</li></ul> | <ul><li>Eden Denis F. da S. L. Santos</ul></li> |
+Esta seção deve listar todas as principais estruturas/bibliotecas usadas para inicializar seu projeto. Deixe quaisquer complementos/plugins para a seção de agradecimentos. Aqui estão alguns exemplos.
+
+* [![Python 3.8](https://img.shields.io/badge/Python%203.8-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+* [![Anaconda](https://img.shields.io/badge/Anaconda-44A833?style=flat-square&logo=anaconda&logoColor=white)](https://www.anaconda.com/)
+
+<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
 
-## Controle de configuração/instalação nos Sistemas Operacionais (SO) vs. Computador
+<!-- COMEÇANDO -->
+### Começando
 
-| Numero | Computador          | Sistema Operacional (SO) | Tipo de sistema | Status da configuração/instalação |
-|:------:|:-------------------:|:------------------------:|:---------------:|:---------------------------------:|
-| 1      | Dell Precision 7520 | Kali Linux               | Debian          | OK                                |
-| 2      | Dell Precision 7520 | Linux Ubuntu             | Ubuntu          | Pendente                          |
-| 3      | Dell Precision 7520 | Linux Xubuntu            | Ubuntu          | Pendente                          |
-| 4      | Dell Precision 7520 | Windows 10               | Windows         | OK                                |
-| 5      | Asus                | Kali Linux               | Debian          | Pendente                          |
-| 6      | Asus                | Linux Ubuntu             | Ubuntu          | Pendente                          |
-| 7      | Asus                | Linux Xubuntu            | Ubuntu          | OK                                |
-| 8      | Asus                | Windows 10               | Windows         | Pendente                          |
+Este é um exemplo de como você pode dar instruções sobre como configurar seu projeto localmente.
+Para obter uma cópia local instalada e funcionando, siga estas etapas simples de exemplo.
 
-### Legenda
+### Pré-requisitos
 
-- **N/A:** **NOT** apllicable/**NÃO** aplicável
-- **OK:** Zero killed
+Este é um exemplo de como listar os itens necessários para usar o software e como instalá-los.
+* Python 3.8
+* Anaconda 24.1.0
+* Git
+* IDE para executar o arquivo `.ipynb` (PyCharm, Spyder, VS Code etc.)
+
+<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
+
 
 ## Descrição [2]
 
