@@ -1,32 +1,3 @@
-<!-- LOGOTIPO DO PROJETO -->
-<div style="display: flex; justify-content: center;">
-   <a href="https://github.com/edendenis/luks">
-     <img src="figures/gold_edf_technology_logo_transparent_background_and_gold_name.png" alt="Logo" width="160" height="160">
-   </a>
-</div>
-
-<h3 align="center">Como configurar/instalar/usar o `luks` no `Linux Ubuntu`</h3>
-
-<!-- <div style="display: flex; justify-content: center;">
-  <a href="https://zenodo.org/doi/10.5281/zenodo.10668919">
-    <img src="https://zenodo.org/badge/758237447.svg" alt="DOI">
-  </a>
-</div> -->
-
-<p align="center">
- Neste documento estão contidos os principais comandos e configurações para configurar/instalar/usar o `luks` no `Linux Ubuntu`.
- <br />
- <a href="https://github.com/edendenis/luks"><strong>Explore os documentos »</strong></a>
- <br />
- <br />
- <a href="https://github.com/edendenis/luks">Ver demonstração</a>
- ·
- <a href="https://github.com/edendenis/luks">Relatar bug</a>
- ·
- <a href="https://github.com/edendenis/luks">Solicitar recurso</a>
-</p>
-
-
 # Como configurar/instalar/usar o `luks` no `Linux Ubuntu`
 
 ## Resumo
@@ -38,49 +9,26 @@ Neste documento estão contidos os principais comandos e configurações para co
 _In this document are contained the main commands and settings to set up/install/use the `luks` on `Linux Ubuntu`._
 
 
-### Construído com
-
-Esta seção deve listar todas as principais estruturas/bibliotecas usadas para inicializar seu projeto. Deixe quaisquer complementos/plugins para a seção de agradecimentos. Aqui estão alguns exemplos.
-
-* [![Python 3.8](https://img.shields.io/badge/Python%203.8-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-* [![Anaconda](https://img.shields.io/badge/Anaconda-44A833?style=flat-square&logo=anaconda&logoColor=white)](https://www.anaconda.com/)
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-<!-- COMEÇANDO -->
-### Começando
-
-Este é um exemplo de como você pode dar instruções sobre como configurar seu projeto localmente.
-Para obter uma cópia local instalada e funcionando, siga estas etapas simples de exemplo.
-
-### Pré-requisitos
-
-Este é um exemplo de como listar os itens necessários para usar o software e como instalá-los.
-* Python 3.8
-* Anaconda 24.1.0
-* Git
-* IDE para executar o arquivo `.ipynb` (PyCharm, Spyder, VS Code etc.)
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
 ## Descrição [2]
+
+### `parted`
+
+O `parted` é uma ferramenta de linha de comando para particionamento de discos no Linux. Ele permite criar, modificar, redimensionar e manipular partições em discos rígidos. O `parted` suporta vários sistemas de arquivos e oferece uma interface flexível para gerenciar esquemas de partições complexos. É útil tanto para usuários iniciantes quanto avançados que precisam configurar discos rígidos de forma eficiente e segura, proporcionando controle detalhado sobre o armazenamento de dados em sistemas Linux.
 
 ### `luks`
 
-LUKS (Linux Unified Key Setup) é uma especificação de criptografia de disco completo amplamente utilizada no `Linux`. Ele permite criar volumes criptografados, fornecendo uma camada adicional de segurança para os dados armazenados no disco. O `LUKS` gerencia chaves de criptografia, permitindo o acesso seguro aos dados somente após a autenticação bem-sucedida do usuário. É uma ferramenta valiosa para proteger informações confidenciais em sistemas `Linux`.
+`LUKS (Linux Unified Key Setup)` é uma especificação de criptografia de disco completo amplamente utilizada no `Linux`. Ele permite criar volumes criptografados, fornecendo uma camada adicional de segurança para os dados armazenados no disco. O `LUKS` gerencia chaves de criptografia, permitindo o acesso seguro aos dados somente após a autenticação bem-sucedida do usuário. É uma ferramenta valiosa para proteger informações confidenciais em sistemas `Linux`.
 
 ### `lvm`
 
-LVM (Logical Volume Manager) é uma tecnologia de gerenciamento de armazenamento flexível para sistemas Linux. Permite criar volumes lógicos que podem ser redimensionados facilmente, independentemente do tamanho do disco físico subjacente. Com o LVM, os administradores de sistema podem criar, redimensionar e mover volumes lógicos sem interromper o sistema ou perder dados. Isso proporciona maior flexibilidade e eficiência na alocação e gerenciamento de espaço em disco.
+`LVM (Logical Volume Manager)` é uma tecnologia de gerenciamento de armazenamento flexível para sistemas Linux. Permite criar volumes lógicos que podem ser redimensionados facilmente, independentemente do tamanho do disco físico subjacente. Com o LVM, os administradores de sistema podem criar, redimensionar e mover volumes lógicos sem interromper o sistema ou perder dados. Isso proporciona maior flexibilidade e eficiência na alocação e gerenciamento de espaço em disco.
 
 ### `recuezilla`
 
 `Rescuezilla` é uma ferramenta de recuperação de sistema baseada em Linux, projetada para ajudar na restauração e backup de dados em caso de falhas no sistema. Com uma interface amigável e recursos poderosos, como clonagem de disco e recuperação de arquivos perdidos, o `Rescuezilla` é uma solução eficaz para lidar com problemas de software e proteger seus dados importantes.
 
 
-## 1. Configurar/Instalar/Usar as `partições` no `Linux Ubuntu` (caso ainda não esteja instalado) **COM** criptografia [2]
+## 1. Configurar/Instalar/Usar as `partições` no `Linux Ubuntu` (caso ainda **NÃO** esteja instalado) **COM** criptografia [2]
 
 Para configurar/instalar/usar as `partições` no `Linux Ubuntu`, siga as configuraçõea abaixo (de prefeência do menor armazenamento para o MAIOR):
 
@@ -98,16 +46,15 @@ Para configurar/instalar/usar as `partições` no `Linux Ubuntu`, siga as config
 
 ### 2.1 Formatar um disco pelo `Terminal Emulator` do `Linux Ubuntu`
 
-Para formatar um disco no Linux, você normalmente precisará de dois passos principais: criar uma partição no disco e, em seguida, criar um sistema de arquivos nessa partição. Aqui está um guia geral sobre como fazer isso usando ferramentas comuns de linha de comando como fdisk ou `parted` para criar partições e mkfs para formatar essas partições.
+Para formatar um disco no `Linux`, você normalmente precisará de dois passos principais: criar uma partição no disco e, em seguida, criar um sistema de arquivos nessa partição. Aqui está um guia geral sobre como fazer isso usando ferramentas comuns de linha de comando como `fdisk` ou `parted` para criar partições e `mkfs` para formatar essas partições.
 
 1. **Identificar o Disco**: Primeiro, é importante confirmar qual disco você deseja usar. Você pode listar todos os dispositivos de armazenamento com o seguinte comando: `sudo lsblk`
 
-2. **Criar Partição no Disco**: Você pode usar fdisk (para discos menores ou sistemas mais antigos) ou `parted` (recomendado para discos maiores ou para um uso mais avançado). Vou usar `parted` para um exemplo com um disco `/dev/sda`. Usando parted:
+2. **Criar Partição no Disco**: Você pode usar fdisk (para discos menores ou sistemas mais antigos) ou `parted` (recomendado para discos maiores ou para um uso mais avançado). Vou usar `parted` para um exemplo com um disco `/dev/sda`. Usando `parted`:
 
     2.1 **Cria uma tabela de partição GPT**: `sudo parted /dev/sda --script mklabel gpt`
 
     2.2 **Cria uma partição primária que ocupa todo o disco**: `sudo parted /dev/sda --script mkpart primary ext4 1MiB 100%` 
-    ```
     
 3. **Desmontar a Partição**: Quando você souber o ponto de montagem, por exemplo, `/dev/sda1` ou algum outro diretório, use o comando umount para desmontá-lo: `sudo umount /dev/sda1`
 
@@ -293,7 +240,6 @@ Usando `LVM` sobre `LUKS`, como no seu caso, você pode facilmente criar múltip
 4. **Atualize as configurações de montagem (`/etc/fstab`)**: Para cada sistema, atualize o arquivo `/etc/fstab` para garantir que os volumes lógicos corretos sejam montados nas posições corretas de `/` e `/home`.
 
 5. **Instalação dos sistemas operacionais**: Proceda com a instalação dos sistemas operacionais nos volumes lógicos específicos que você criou para cada um.
-
 Esta abordagem lhe dará uma grande flexibilidade e isolamento entre os sistemas operacionais, aproveitando as vantagens do LVM para fácil gerenciamento e expansão das partições conforme necessário.
 
 ## 3. Utilizar o `LUKS` para criptografar seu HD ou SSD e depois usar o `Rescuezilla` para copiar ou clonar o disco criptografado
@@ -366,7 +312,7 @@ o `GRUB` (GRand Unified Bootloader) pode funcionar com sistemas em que um dos HD
     3.2 O `GRUB` deverá ser capaz de iniciar o Windows normalmente, selecionando a entrada correspondente no menu do `GRUB`.
 
 
-### 4.2 Instalar/Reparar Bootloader Ubuntu `GRUB`
+### 4.2 Instalar/Reparar Bootloader `Ubuntu` `GRUB`
 
 **ATENÇÂO**: Tenha em mente que o `GRUB` deve ser instalado no primário da sequência de `boot`, logo, se ele for instalado em outro disco, este, por sua vez, deve ser alterado para ser o primeiro disco na inicialização do computador.
 
@@ -456,7 +402,7 @@ Enter 'help' for a list of built-in commands
 (initramfs)
 ```
 
-A tela que você está vendo é a shell do BusyBox acoplada ao initramfs, o que geralmente indica que o sistema não consegue encontrar o sistema de arquivos raiz ou há algum problema com ele. Isso pode acontecer por várias razões, como uma referência incorreta no UUID no `GRUB`, problemas no sistema de arquivos, ou falha na montagem da partição criptografada.
+A tela que você está vendo é a `shell` do `BusyBox` acoplada ao `initramfs`, o que geralmente indica que o sistema não consegue encontrar o sistema de arquivos raiz ou há algum problema com ele. Isso pode acontecer por várias razões, como uma referência incorreta no UUID no `GRUB`, problemas no sistema de arquivos, ou falha na montagem da partição criptografada.
 
 Aqui estão algumas etapas para diagnosticar e corrigir o problema:
 
