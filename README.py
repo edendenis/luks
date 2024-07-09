@@ -467,7 +467,45 @@
 # - **Fechar aplicativos antes de desligar**: Para evitar este problema no futuro, certifique-se de fechar todos os aplicativos, especialmente navegadores como `Google Chrome`, antes de desligar ou reiniciar o computador.
 # 
 
-# ## 5. Código completo para configurar/instalar/usar
+# ## 5. Aumentar/reduzir a partição `swap` criptografada
+# 
+# Vamos ajustar sua lista para uma sequência que faça sentido e seja segura:
+# 
+# 1. **Abrir a partição criptografada**: `sudo cryptsetup luksOpen /dev/sda4 decrypted`
+# 
+# 2. **Ativar os grupos de volumes**: `sudo vgchange -ay`
+# 
+# 3. **Desativar o `swap`**: `sudo swapoff -a`
+# 
+# 4. **Checar o espaço disponível nos grupos de volumes**: `sudo vgs`
+# 
+# 5. **Reduzir outro volume lógico se necessário (por exemplo, `/root` se houver espaço livre suficiente)**:
+# 
+#     5.1 **Desmontar o volume (apenas se for possível e seguro, como um `/home`)**: `sudo umount /dev/vgxubuntu/root`
+# 
+#     5.2 **Reduzir o sistema de arquivos (para `ext4`)**:
+# 
+#     ```
+#     sudo e2fsck -f /dev/mapper/vgxubuntu-root
+#     sudo resize2fs /dev/mapper/vgxubuntu-root 100G  # Ajuste para o novo tamanho desejado
+#     ```
+# 
+#     5.3 **Reduzir o volume lógico**: `sudo lvreduce -L -30G /dev/vgxubuntu/root  # Reduzir 30G ou conforme necessário`
+# 
+#     5.4 **Montar o volume novamente, se tiver sido desmontado**: `sudo mount /dev/vgxubuntu/root /root`
+# 
+# 6. **Aumentar o tamanho do volume de `swap`**: `sudo lvresize -L +30G /dev/vgxubuntu/swap_1`
+# 
+# 7. **Reformate o `swap`**: `sudo mkswap /dev/vgxubuntu/swap_1`
+# 
+# 8. **Reative o `swap`**: `sudo swapon /dev/vgxubuntu/swap_1`
+# 
+# 9. **Verificar se o `swap` está ativo e com o tamanho correto**: `swapon --show`
+# 
+# Esta sequência de passos assume que você tem espaço suficiente para reduzir um volume e aumentar o `swap`. Lembre-se de que reduzir volumes com dados críticos é arriscado, especialmente se não houver _backups_. Sempre verifique o espaço livre e o usado antes de tentar reduzir um volume. Se estiver trabalhando com dados importantes, é essencial ter _backups_ antes de iniciar essas operações.
+# 
+
+# ## 6. Código completo para configurar/instalar/usar
 # 
 # Para configurar/instalar/usar o `luks` no `Linux Ubuntu`sem precisar digitar linha por linha, você pode seguir estas etapas:
 # 
