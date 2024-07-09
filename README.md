@@ -9,26 +9,47 @@ Neste documento estão contidos os principais comandos e configurações para co
 _In this document are contained the main commands and settings to set up/install/use the `luks` on `Linux Ubuntu`._
 
 
+## Revisão(ões)/Versão(ões)
+
+| Revisão número | Data da revisão | Descrição da revisão                                    | Autor da revisão                                |
+|:--------------:|:---------------:|:--------------------------------------------------------|:------------------------------------------------|
+| 0              | 16/04/2024      | <ul><li>Revisão inicial/criação do documento.</li></ul> | <ul><li>Eden Denis F. da S. L. Santos</ul></li> |
+
+
+## Controle de configuração/instalação nos Sistemas Operacionais (SO) vs. Computador
+
+| Numero | Computador          | Sistema Operacional (SO) | Tipo de sistema | Status da configuração/instalação |
+|:------:|:-------------------:|:------------------------:|:---------------:|:---------------------------------:|
+| 1      | Dell Precision 7520 | Kali Linux               | Debian          | OK                                |
+| 2      | Dell Precision 7520 | Linux Ubuntu             | Ubuntu          | Pendente                          |
+| 3      | Dell Precision 7520 | Linux Xubuntu            | Ubuntu          | Pendente                          |
+| 4      | Dell Precision 7520 | Windows 10               | Windows         | OK                                |
+| 5      | Asus                | Kali Linux               | Debian          | Pendente                          |
+| 6      | Asus                | Linux Ubuntu             | Ubuntu          | Pendente                          |
+| 7      | Asus                | Linux Xubuntu            | Ubuntu          | OK                                |
+| 8      | Asus                | Windows 10               | Windows         | Pendente                          |
+
+### Legenda
+
+- **N/A:** **NOT** apllicable/**NÃO** aplicável
+- **OK:** Zero killed
+
 ## Descrição [2]
-
-### `parted`
-
-O `parted` é uma ferramenta de linha de comando para particionamento de discos no Linux. Ele permite criar, modificar, redimensionar e manipular partições em discos rígidos. O `parted` suporta vários sistemas de arquivos e oferece uma interface flexível para gerenciar esquemas de partições complexos. É útil tanto para usuários iniciantes quanto avançados que precisam configurar discos rígidos de forma eficiente e segura, proporcionando controle detalhado sobre o armazenamento de dados em sistemas Linux.
 
 ### `luks`
 
-`LUKS (Linux Unified Key Setup)` é uma especificação de criptografia de disco completo amplamente utilizada no `Linux`. Ele permite criar volumes criptografados, fornecendo uma camada adicional de segurança para os dados armazenados no disco. O `LUKS` gerencia chaves de criptografia, permitindo o acesso seguro aos dados somente após a autenticação bem-sucedida do usuário. É uma ferramenta valiosa para proteger informações confidenciais em sistemas `Linux`.
+LUKS (Linux Unified Key Setup) é uma especificação de criptografia de disco completo amplamente utilizada no `Linux`. Ele permite criar volumes criptografados, fornecendo uma camada adicional de segurança para os dados armazenados no disco. O `LUKS` gerencia chaves de criptografia, permitindo o acesso seguro aos dados somente após a autenticação bem-sucedida do usuário. É uma ferramenta valiosa para proteger informações confidenciais em sistemas `Linux`.
 
 ### `lvm`
 
-`LVM (Logical Volume Manager)` é uma tecnologia de gerenciamento de armazenamento flexível para sistemas Linux. Permite criar volumes lógicos que podem ser redimensionados facilmente, independentemente do tamanho do disco físico subjacente. Com o LVM, os administradores de sistema podem criar, redimensionar e mover volumes lógicos sem interromper o sistema ou perder dados. Isso proporciona maior flexibilidade e eficiência na alocação e gerenciamento de espaço em disco.
+LVM (Logical Volume Manager) é uma tecnologia de gerenciamento de armazenamento flexível para sistemas Linux. Permite criar volumes lógicos que podem ser redimensionados facilmente, independentemente do tamanho do disco físico subjacente. Com o LVM, os administradores de sistema podem criar, redimensionar e mover volumes lógicos sem interromper o sistema ou perder dados. Isso proporciona maior flexibilidade e eficiência na alocação e gerenciamento de espaço em disco.
 
 ### `recuezilla`
 
 `Rescuezilla` é uma ferramenta de recuperação de sistema baseada em Linux, projetada para ajudar na restauração e backup de dados em caso de falhas no sistema. Com uma interface amigável e recursos poderosos, como clonagem de disco e recuperação de arquivos perdidos, o `Rescuezilla` é uma solução eficaz para lidar com problemas de software e proteger seus dados importantes.
 
 
-## 1. Configurar/Instalar/Usar as `partições` no `Linux Ubuntu` (caso ainda **NÃO** esteja instalado) **COM** criptografia [2]
+## 1. Configurar/Instalar/Usar as `partições` no `Linux Ubuntu` (caso ainda não esteja instalado) **COM** criptografia [2]
 
 Para configurar/instalar/usar as `partições` no `Linux Ubuntu`, siga as configuraçõea abaixo (de prefeência do menor armazenamento para o MAIOR):
 
@@ -46,15 +67,16 @@ Para configurar/instalar/usar as `partições` no `Linux Ubuntu`, siga as config
 
 ### 2.1 Formatar um disco pelo `Terminal Emulator` do `Linux Ubuntu`
 
-Para formatar um disco no `Linux`, você normalmente precisará de dois passos principais: criar uma partição no disco e, em seguida, criar um sistema de arquivos nessa partição. Aqui está um guia geral sobre como fazer isso usando ferramentas comuns de linha de comando como `fdisk` ou `parted` para criar partições e `mkfs` para formatar essas partições.
+Para formatar um disco no Linux, você normalmente precisará de dois passos principais: criar uma partição no disco e, em seguida, criar um sistema de arquivos nessa partição. Aqui está um guia geral sobre como fazer isso usando ferramentas comuns de linha de comando como fdisk ou `parted` para criar partições e mkfs para formatar essas partições.
 
 1. **Identificar o Disco**: Primeiro, é importante confirmar qual disco você deseja usar. Você pode listar todos os dispositivos de armazenamento com o seguinte comando: `sudo lsblk`
 
-2. **Criar Partição no Disco**: Você pode usar fdisk (para discos menores ou sistemas mais antigos) ou `parted` (recomendado para discos maiores ou para um uso mais avançado). Vou usar `parted` para um exemplo com um disco `/dev/sda`. Usando `parted`:
+2. **Criar Partição no Disco**: Você pode usar fdisk (para discos menores ou sistemas mais antigos) ou `parted` (recomendado para discos maiores ou para um uso mais avançado). Vou usar `parted` para um exemplo com um disco `/dev/sda`. Usando parted:
 
     2.1 **Cria uma tabela de partição GPT**: `sudo parted /dev/sda --script mklabel gpt`
 
     2.2 **Cria uma partição primária que ocupa todo o disco**: `sudo parted /dev/sda --script mkpart primary ext4 1MiB 100%` 
+    ```
     
 3. **Desmontar a Partição**: Quando você souber o ponto de montagem, por exemplo, `/dev/sda1` ou algum outro diretório, use o comando umount para desmontá-lo: `sudo umount /dev/sda1`
 
@@ -312,7 +334,7 @@ o `GRUB` (GRand Unified Bootloader) pode funcionar com sistemas em que um dos HD
     3.2 O `GRUB` deverá ser capaz de iniciar o Windows normalmente, selecionando a entrada correspondente no menu do `GRUB`.
 
 
-### 4.2 Instalar/Reparar Bootloader `Ubuntu` `GRUB`
+### 4.2 Instalar/Reparar Bootloader Ubuntu `GRUB`
 
 **ATENÇÂO**: Tenha em mente que o `GRUB` deve ser instalado no primário da sequência de `boot`, logo, se ele for instalado em outro disco, este, por sua vez, deve ser alterado para ser o primeiro disco na inicialização do computador.
 
@@ -402,108 +424,45 @@ Enter 'help' for a list of built-in commands
 (initramfs)
 ```
 
-A tela que você está vendo é a `shell` do `BusyBox` acoplada ao `initramfs`, o que geralmente indica que o sistema não consegue encontrar o sistema de arquivos raiz ou há algum problema com ele. Isso pode acontecer por várias razões, como uma referência incorreta no UUID no `GRUB`, problemas no sistema de arquivos, ou falha na montagem da partição criptografada.
+#### Passo a passo para resolver o erro `BusyBox` no boot do `Linux Ubuntu`
 
-Aqui estão algumas etapas para diagnosticar e corrigir o problema:
+Se você está enfrentando o erro do `BusyBox` ao iniciar o seu sistema `Linux Ubuntu`, siga estes passos para resolver o problema:
 
-1. **Verificar o UUID**: Verifique se o UUID da partição raiz listado no `GRUB` corresponde ao UUID real da partição. Você pode fazer isso reiniciando no Live CD/USB, abrindo um terminal, e utilizando o comando sudo blkid. Então compare este UUID com o que está configurado no `GRUB` (você pode verificar isso no arquivo `/boot/grub/grub.cfg`).
+1. **Reiniciar o sistema**: Reinicie o sistema: No prompt do `BusyBox`, digite o comando reboot e pressione `Enter`: `reboot`
 
-1. **Desbloqueie a partição LUKS (certificando-se de que a senha está correta)**: Para montar o sistema de arquivos corretamente, você precisa primeiro identificar e ativar o volume lógico. Aqui estão os passos para fazer isso: `sudo cryptsetup luksOpen /dev/sda3 sda4_crypt`
+2. **Acessar o Menu `GRUB`**: Aguarde o sistema reiniciar: O sistema abrirá o menu `GRUB`.
 
-2. **Monte a partição `sda4_crypt`**:
+3. **Selecione a opção avançada**: No menu `GRUB`, selecione `"Advanced options for Ubuntu"` e pressione `Enter`.
 
-    ```
-    sudo mkdir /mnt
-    sudo mount /dev/mapper/sda4_crypt /mnt
-    ```
+4. **Entrar no Modo de Recuperação**:
 
-3. **Ative o volume lógico LVM**: `sudo vgchange -ay`
+    4.1 **Selecione o modo de recuperação**: Na lista de opções avançadas, selecione a opção de recuperação `(recovery mode)` e pressione `Enter`.
 
-    Isso ativará todos os volumes lógicos disponíveis. O comando acima deve dar um nome ao volume lógico que foi ativado. Se seguiu os passos das Seções anteriores, o nome se chamará: `vgxubuntu`
+    4.2 Aguarde enquanto o sistema carrega o modo de recuperação.
 
-4. **Identifique o volume lógico**: `sudo lvs`
+4. **Inserir a Senha (se aplicável)**: Inserir a senha de criptografia: Se o seu sistema for criptografado, será solicitado que você insira a senha de criptografia. Digite a senha e pressione `Enter`.
 
-    Este comando irá listar todos os volumes lógicos disponíveis. Anote o nome do volume que corresponde ao sistema de arquivos raiz. Se seguiu os passos das Seções anteriores, o nome se chamará: `ubuntu_root`
+5. **Executar o Comando de Verificação de Sistema de Arquivos**:
 
-5. **Monte o volume lógico que contém o sistema de arquivos raiz**: `sudo mount /dev/mapper/sda4_crypt /mnt`
+    5.1 **Identificar o caminho do sistema de arquivos raiz**: O sistema exibirá uma mensagem indicando o caminho do sistema de arquivos raiz com problemas.
 
-    Substitua `VG_NAME` e `LV_NAME` pelos nomes corretos do seu volume lógico.
+    5.2 **Executar o comando `fsck`**: Digite o comando `fsck` seguido pelo caminho completo do sistema de arquivos raiz indicado na mensagem de erro: `fsck /dev/vgxubuntu-root`
 
-6. Se houver um volume separado para `/boot` (ou `/boot/efi` para `UEFI`), você precisará montá-lo também. Se seguiu os passos das Seções anteriores:
+    Substitua `/dev/vgxubuntu-root` pelo caminho indicado na mensagem de erro.
 
-    ```
-    sudo mkdir /mnt/boot
-    sudo mount /dev/sda2 /mnt/boot  # Está invertido por conta do número da partição
-    ```
+6. **Reiniciar o Sistema**:
 
-    Substitua `VG_NAME` e `LV_BOOT` pelo nome do volume lógico de `boot`.
+    6.1 **Reiniciar o sistema**: Após a conclusão do `fsck`, digite o comando reboot e pressione `Enter`: `reboot`
 
-    7.1 Se você tiver um volume separado para `/boot/efi` (apenas sistemas `UEFI`), não esqueça de montá-lo também:
+7. **Selecionar o `Linux Ubuntu` no Menu `GRUB`**: Selecionar o `Linux Ubuntu`:
+No menu `GRUB`, selecione `"Ubuntu"` e pressione `Enter`.
 
-    ```
-    sudo mkdir /mnt/boot/efi
-    sudo mount /dev/sda1 /mnt/boot/efi  # Está invertido por conta do número da partição
-    ```
+8. **Fazer Login no Sistema**: Fazer login no `Linux Ubuntu`: Digite a senha do seu usuário quando solicitado e pressione `Enter`.
 
-    Substitua `sdXY` pelo dispositivo `EFI` correto.
+**Prevenção**
 
-    Não há problema algum em ter as partições `/boot` e `/boot/efi` fora do LVM. Na verdade, é comum que essas partições estejam fora do LVM, especialmente a partição `EFI`, pois o firmware `UEFI` precisa acessá-las diretamente.
+- **Fechar aplicativos antes de desligar**: Para evitar este problema no futuro, certifique-se de fechar todos os aplicativos, especialmente navegadores como `Google Chrome`, antes de desligar ou reiniciar o computador.
 
-    A partição `/boot/efi` deve ser uma partição de sistema `EFI` formatada com `FAT32`, e a partição `/boot` normalmente contém os kernels e imagens `initramfs` para o processo de inicialização. Ambas devem ser montadas diretamente pelas suas designações de dispositivo (por exemplo, `/dev/sda1` para `EFI` e `/dev/sda2` para `/boot`) em vez de nomes de volume lógico LVM.
-
-    7.2 **Verifique se a partição `EFI` está formatada como `FAT32`**: Verifique o sistema de arquivos da partição `EFI` com o seguinte comando: `sudo blkid /dev/sda1`
-
-    Isso deve retornar `TYPE="vfat"`, que é o identificador para partições `FAT32`. Se isso não acontecer, pode haver um problema com a partição `EFI`.
-
-    7.3 **Depois de montar, verifique se os arquivos da `EFI` estão presentes**: `ls -al /mnt/boot/efi`
-
-    Você deveria ver diretórios como `EFI`, `Microsoft`, `Boot` etc.
-
-8. **Monte os sistemas de arquivos virtuais**: Certifique-se de que você está montando estes diretórios antes de entrar no `chroot`. Saia do `chroot` se você já estiver dentro e execute:
-
-    ```
-    sudo mount --bind /dev /mnt/dev
-    sudo mount --bind /dev/pts /mnt/dev/pts
-    sudo mount --bind /proc /mnt/proc
-    sudo mount --bind /sys /mnt/sys
-    sudo mount --bind /run /mnt/run
-    ```
-
-    Essas montagens garantem que o ambiente do sistema operacional dentro do chroot funcione corretamente, permitindo que comandos e programas acessem informações do hardware e do sistema operacional `host`.
-
-9. **Entre no ambiente `chroot` novamente**: `sudo chroot /mnt`
-
-10. **Dentro do `chroot`, tente atualizar o `initramfs`**: `update-initramfs -u` ou `update-initramfs -c -k -all`
-
-    Este comando deverá agora executar sem emitir os erros anteriores.
-
-    8.1 **Instalar o `firmware` faltante**: Se você confirmar que o sistema inicia e pode acessar a internet ou se você pode montar um dispositivo com os arquivos necessários, você pode tentar instalar o `firmware` faltante.
-
-    Os pacotes de `firmware` para dispositivos AMD geralmente podem ser encontrados nos repositórios oficiais da sua distribuição `Linux`. No `Debian` e em sistemas baseados no `Ubuntu`, você pode instalar os pacotes de `firmware` com o comando:
-
-    ```
-    sudo apt update
-    sudo apt install firmware-amd-graphics
-    ```
-
-    Você pode precisar configurar repositórios adicionais ou habilitar componentes non-free para acessar esses pacotes.
-
-11. **Dentro do `chroot`, continue com a atualização do `GRUB`**: `update-grub`
-
-12. **Saia do `chroot` e desmonte as partições**: Quando terminar todas as configurações e atualizações dentro do `chroot`, você deve sair e desmontar todos os diretórios montados para evitar problemas ao reiniciar:
-
-    ```
-    exit
-    sudo umount /mnt/boot/efi
-    sudo umount /mnt/boot
-    sudo umount /mnt/dev/pts
-    sudo umount /mnt/dev
-    sudo umount /mnt/proc
-    sudo umount /mnt/sys
-    sudo umount /mnt/run
-    sudo umount -l /mnt  # o `-l` força a desmontagem
-    sudo systemctl reboot
-    ```
 
 ## 5. Código completo para configurar/instalar/usar
 
